@@ -1,0 +1,37 @@
+all: run1 run2 run3 run4
+	rm maxer.cpp
+
+run1: maxer.cpp compile1
+	compile1 run1
+run2: maxer.cpp compile2
+	compile2 run2
+	rm compile2
+run3: maxer.cpp maxer1.o maxer2.o maxer3.o
+	g++ -o run3 maxer.cpp maxer1.o maxer2.o maxer3.o -D_ABCD
+	rm maxer1.o maxer2.o maxer3.o maxer2.cpp maxer3.cpp
+run4: maxer.cpp
+	g++ -o run4 maxer.cpp
+maxer1.o: maxer1.cpp
+	g++ -c maxer1.cpp
+maxer2.o: maxer2.cpp
+	g++ -c maxer2.cpp
+maxer3.o: maxer3.cpp
+	g++ -c maxer3.cpp
+maxer2.cpp: maxer1.cpp
+	tr "1" "2" < maxer1.cpp > temp1
+	sed 's/Hamilton/Toronto/' temp1 > temp2
+	sed 's/nice/nicer/' temp2 > maxer2.cpp
+	rm temp1 temp2
+maxer3.cpp: maxer1.cpp
+	tr "1" "3" < maxer1.cpp > temp1
+	sed 's/Hamilton/Ottawa/' temp1 > temp2
+	sed 's/nice/not nice/' temp2 > maxer3.cpp
+	rm temp1 temp2
+compile2: compile1
+	sed 's/AB/ABC/' compile1 > compile2
+	chmod u+x compile2
+maxer.cpp: module1 module2
+	cp module1 maxer.cpp
+	cat module2 >> maxer.cpp
+clean:
+	rm run1 run2 run3 run4
