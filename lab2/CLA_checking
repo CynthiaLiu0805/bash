@@ -1,0 +1,54 @@
+#!/bin/bash
+
+
+#print usage
+usage(){
+  echo "Usage: script2 -0"
+  echo "  or"
+  echo "    script2 -1 <file>"
+  echo "  or"
+  echo "    script2 -2 <file1> <file2>"
+}
+
+
+
+if [ $# != 1 ] && [ $# != 2 ] && [ $# != 3 ]
+then
+  echo "wrong number of command line arguments"
+  usage
+fi
+
+if [ $# == 1 ]
+then
+  if [ $1 == -0 ]
+  then
+    echo "Thank you for nothing"
+  else
+    echo "incorrect CLA: $1"
+    usage
+  fi
+fi
+
+if [ $# == 2 ]
+then
+  if [ $1 == -1 ]
+  then
+    echo "Thank you for $2"
+  else
+    echo "incorrect CLA: $1"
+    usage
+  fi
+fi
+
+if [ $# == 3 ]
+then
+  if [ $1 == -2 ]
+  then
+    echo "Thank you for $2"
+    echo "here is $3"
+    echo "my thanks." > $3
+  else
+    echo "incorre t CLA: $1"
+    usage
+  fi
+fi
