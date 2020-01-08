@@ -15,7 +15,7 @@ printf("team1 module");
 printf("team1 module");
 
 printf("team1 module");
-
+-------------------------
 
 
 printf("team2 module");
@@ -28,7 +28,7 @@ printf("team2 module");
 
 printf("team2 module");
 
-
+-------------------------
 printf("team3 module");
 
 printf("team3 module");
