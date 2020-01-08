@@ -1,0 +1,19 @@
+#!/bin/bash
+:’Create a bash script s1 that has 3 command line arguments. If the number of arguments is not correct, it displays a message and terminates. If the number of arguments is correct, it creates a text file with the name given by $1, and the content of the file is $3 lines containing the line number and $2 separated by a comma. For instance, if s1 hello bye 100 is executed, a file named hello will be created and it will contain 100 lines: 1,bye … 100,bye
+‘
+
+# check if the numberof arguments is 3
+if [ $# -ne 3 ] 
+then
+    echo "Usage: `basename $0` \$1 \$2 \$3" 
+    exit
+fi
+
+# redirect standard output to $1
+>$1
+
+# loop through and create the lines and ad them to $1
+for ((i=1; i<=$3; i++))
+do
+    echo "$i,$2">>$1
+done
