@@ -1,0 +1,39 @@
+#!/bin/bash
+
+:’The script creates in the current directory a subdirectory named XXX and in this subdirectory a few files. The contents of the files are not important (in the sample solution provided, three files named file1, fi1e2, and file3 are created, each containing just 1 empty byte). The script then checks all files in the current directory and all files in its subdirectories and displays their names. If a file is in a subdirectory, the file's name is followed by the name of the subdirectory in parenthesis. After that, the subdirectory XXX and all its files are removed.
+Hints: use find . to list all files, have a look how the output looks like -- it gives the relative pathname for each file. Use the command dirname <pathname> to find the directory of each file. If the directory name is dot, it means that the file is in the current directory, so just display it as the plain file using the command basename <pathname> . If it is not dot, remember the name of the directory and strip ./ from the beginning of the pathname, then display the name of the file using basename <pathname> and then the remembered directory.
+A sample run, the current directory contains just five files named script1, script2, script3, script4, and script5:
+script1
+script3
+script4
+script5
+script2
+script1
+file1 (XXX)
+file2 (XXX)
+file3 (XXX)
+‘
+
+
+
+
+mkdir XXX
+echo " " > XXX/file1
+echo " " > XXX/file2
+echo " " > XXX/file3
+
+
+files=`(find . -type f)`         #find type f
+for file in $files
+do
+  if [ "$(dirname $file)" == "." ]
+  then
+    echo $(basename $file)
+  else
+    x=$(dirname $file)
+    y=${x:2}
+    echo $(basename $file) \($y\)
+  fi
+done
+
+rm -r XXX

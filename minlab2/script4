@@ -1,0 +1,147 @@
+#!/bin/bash
+
+:’This is an extension of script3 . A subdirectory XXX in the current directory is created and the files s1, s1a, s2, s2a, and s3 are moved to XXX while renamed to t1, t1a, t2, t2a, and t3 . All the files in the current directory are checked to see if the files s1, s1a, s2, s2a, and s3 disappeared from the current directory. For appropriate messages see the sample runs below.
+When the script performs well and it produces an output like the sample run below, block out the moving of one of the files s1, s1a, s2, s2a, and s3 and run the script again, you should get output similar to the second sample run below.
+‘
+
+
+
+echo "I am s1" > s1
+echo "I am s1a" > s1a
+echo "I am s2" > s2
+echo "I am s2a" > s2a
+echo "I am s3" > s3
+
+
+x1=0
+x1a=0
+x2=0
+x2a=0
+x3=0
+x4=0
+Files=`ls`
+for file in $Files
+do
+  if [ "$file" == "s1" ]     #so == and = is the same? and "" and no "" is same too?
+  then
+    x1=1
+  fi
+  if [ "$file" = "s1a" ]
+  then
+    x1a=1
+  fi
+  if [ "$file" = "s2" ]
+  then
+    x2=1
+  fi
+  if [ "$file" = "s2a" ]
+  then
+    x2a=1
+  fi
+  if [ "$file" = "s3" ]
+  then
+    x3=1
+  fi
+done
+
+if [ $x1 -eq 1 ]   #equal to a number
+then
+  echo "s1 found in current directory"
+else
+  echo "s1 not found in current directory"
+fi
+if [ $x1a -eq 0 ]
+then
+  echo "s1a not found in current directory"
+else
+  echo "s1a found in current directory"
+fi
+if [ $x2 -eq 0 ]
+then
+  echo "s2 not found in current directory"
+else
+  echo "s2 found in current directory"
+fi
+if [ $x2a -eq 0 ]
+then
+  echo "s2a found in current directory"
+else
+  echo "s2a found in current directory"
+fi
+if [ $x3 -eq 0 ]
+then
+  echo "s3 not found in current directory"
+else
+  echo "s3 found in current directory"
+fi
+
+#x=$x1
+x=$((x1+x1a))   #here $ the same
+x=$((x+$x2))
+x=$((x+$x2a))
+x=$((x+$x3))
+
+if [ $x -lt 5 ]    #-lt stands for less than
+then
+  echo "not all files found in current directory"
+else
+  echo "all files found in current directory"
+fi
+
+#rm s[123]*   #[sth]the middle is 1/2/3
+
+mkdir XXX
+echo "XXX created"
+mv s1 XXX/t1
+mv s1a XXX/t1a
+mv s2 XXX/t2
+mv s2a XXX/t2a
+mv s3 XXX/t3
+echo "all files moved to XXX"
+
+
+x1=0
+x1a=0
+x2=0
+x2a=0
+x3=0
+x4=0
+Files=`ls`
+for file in $Files
+do
+  if [ "$file" == "s1" ]     #so == and = is the same? and "" and no "" is same too?
+  then
+    x1=1
+  fi
+  if [ "$file" = "s1a" ]
+  then
+    x1a=1
+  fi
+  if [ "$file" = "s2" ]
+  then
+    x2=1
+  fi
+  if [ "$file" = "s2a" ]
+  then
+    x2a=1
+  fi
+  if [ "$file" = "s3" ]
+  then
+    x3=1
+  fi
+done
+
+x=$((x1+x1a))   #here $ the same
+x=$((x+x2))
+x=$((x+x2a))
+x=$((x+x3))
+
+
+if [ $x -eq 0 ]
+then
+  echo "all files disappeared from current director"
+else
+  echo "not all files disappeared from current director"
+fi
+
+rm -r XXX

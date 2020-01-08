@@ -1,0 +1,30 @@
+#!/bin/bash
+
+:’
+Write a bash script that creates in a loop 10 different files in the current directory named lab2_file_1, lab2_file_2, ..., lab2_file_10. The file lab2_file_1 contains a single line saying 123, file lab2_file_2 contains a single line saying 234, ..., file lab2_file_10 contains a single line saying 101112. Then it gets names of all files in the directory and in a loop it displays the names and contents of the created files (ignoring all other files that there may be). Then it removes all the created files, leaving all other files intact. Should produce an output similar to the sample run below.
+
+Hints: read section 3.1.2(http://www.cas.mcmaster.ca/~franek/courses/cs2xa3/help/bash/Quoting.html#Quoting)
+of the bash manual (found in Help) to understand the use of ' (single quote) and " (double quote). Read section 3.5.5(http://www.cas.mcmaster.ca/~franek/courses/cs2xa3/help/bash/Arithmetic-Expansion.html#Arithmetic-Expansion)
+to understand how to do arithmetic, in particular expressions like $(($i+1)) and section 3.5.4(http://www.cas.mcmaster.ca/~franek/courses/cs2xa3/help/bash/Command-Substitution.html#Command-Substitution)
+ to understand how to use ` (back quote). Read section 6.4(http://www.cas.mcmaster.ca/~franek/courses/cs2xa3/help/bash/Bash-Conditional-Expressions.html#Bash-Conditional-Expressions)
+ to learn about bash conditional expressions.
+‘
+
+
+for i in {1..10}
+do
+  echo "$i$(($i+1))$(($i+2))" > lab2_file_$i
+done
+
+Files=`ls`
+for file in $Files
+do
+  if [ "${file:0:10}" = "lab2_file_" ]
+  then
+    echo $file:
+    cat $file
+  fi
+done
+
+rm lab2_file_*
+
