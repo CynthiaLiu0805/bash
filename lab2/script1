@@ -1,0 +1,137 @@
+#!/bin/bash
+
+
+mkdir MY_DIR
+echo "MY_DIR directory created."
+
+mkdir MY_DIR/My_dir
+echo "MY_DIR/My_dir directory created."
+
+
+for i in {1..14}
+do
+  echo "File fileA_$((i))" > MY_DIR/My_dir/fileA_$i
+  echo "Next file fileA_$((i+1))" >> MY_DIR/My_dir/fileA_$i
+done
+
+
+echo "File fileA_15" > MY_DIR/My_dir/fileA_15
+echo "No successor" >> MY_DIR/My_dir/fileA_15
+
+#4 show file
+cd MY_DIR/My_dir
+echo "Regular files of subdirectory My_dir of directory MY_DIR:"
+Files=`ls`
+for f in $Files
+do
+  if [ "${f:0:6}" = "fileA_" ]
+  then
+    echo $f
+  fi
+done
+
+#5 show content of files
+echo "Created files contents:"
+for i in {1..15}
+do
+  if [ -f "fileA_$i" ]
+  then
+    echo $"File "$"fileA_$i":
+    cat $"fileA_$i"
+  fi
+done
+
+#6 move files
+File=`ls`
+for f in $File
+do
+  x=`grep '1\|2\|3' $f`
+  if [ -n "$x" ]
+  then
+    mv $f ..
+  fi
+done
+
+#7
+cd ..                                                      #go to MY_DIR
+echo "Regular files of directory MY_DIR:"
+file=`find . -type f`
+for f in $file
+do
+  if [ "${f:0:8}" = "./fileA_" ]
+  then
+    echo ${f:2}
+  fi
+done
+
+#8 move content to BAG
+for i in {1..15}
+do
+  if [ -f "fileA_$i" ]
+  then
+    cat "fileA_$i" >> BAG
+  fi
+done
+
+#9
+file=`find . -type f`
+for f in $file
+do
+  if [ "${f:0:8}" = "./fileA_" ]
+  then
+    rm $f
+  fi
+done
+
+
+#10
+echo "All regular files of MY_DIR:"
+cd ..                                      #exit MY_DIR
+file=`find MY_DIR -maxdepth 1 -type f`
+for f in $file
+do
+  name=`basename $f`
+  echo $name
+done
+cd MY_DIR                       #goback
+
+#11 display content of BAG
+echo "File BAG:"
+cat BAG
+
+#12
+echo "All regular files of MY_DIR/My_dir:"
+cd My_dir                                   #now in My_dir
+file=`find . -type f`
+for f in $file
+do
+  echo ${f:2}
+done
+
+#13
+for i in {1..15}
+do
+  if [ -f "fileA_$i" ]
+  then
+    cat "fileA_$i" >> bag
+  fi
+done
+
+#14
+find . -type f ! -name 'bag' -delete
+
+#15
+echo "All regular files of My_dir"
+file=`find . -type f`
+echo ${file:2}
+
+#16
+echo "File bag:"
+cat bag
+
+#17
+cd .. #back to MY_DIR
+cd .. #To parent dic
+rm -r MY_DIR
+
+
