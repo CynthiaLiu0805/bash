@@ -1,0 +1,31 @@
+directories:
+	mkdir team1
+	cp module1.cpp ./team1/module.cpp
+	mkdir team2
+	cp module2.cpp ./team2/module.cpp
+	mkdir team3
+	cp module3.cpp ./team3/module.cpp
+
+system.cpp:
+	g++ -o semicol semicol.cpp
+	semicol team1/module.cpp
+	semicol team2/module.cpp
+	semicol team3/module.cpp
+	g++ -o single single.cpp
+	single team1/module.cpp
+	single team2/module.cpp
+	single team3/module.cpp
+
+	cat team1/module.cpp > temp1
+	cat team2/module.cpp >> temp1
+	cat team3/module.cpp >> temp1
+
+	sed 's/@semi/\n/g' temp1 > temp2
+	sed 's/ p/p/g' temp2 > temp3
+	sed 's/)/);/g' temp3 > system.cpp
+
+clean:
+	rm -r team*
+	rm system.cpp
+	rm temp*
+
